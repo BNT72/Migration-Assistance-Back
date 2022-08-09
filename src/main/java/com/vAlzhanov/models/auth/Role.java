@@ -1,19 +1,22 @@
 package com.vAlzhanov.models.auth;
 
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-@Data
+
+@Getter
+@Setter
 @Entity
 @Table(name = "roles")
 public class Role {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-  @Enumerated(EnumType.STRING)
-  @Column(length = 20)
-  private ERole name;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20)
+    private ERole name;
 
 }

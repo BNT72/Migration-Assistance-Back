@@ -1,15 +1,17 @@
 package com.vAlzhanov.models.supportService;
 
-import com.vAlzhanov.models.auth.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import com.vAlzhanov.models.auth.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "message")
 public class Message {
@@ -22,7 +24,6 @@ public class Message {
     private String message;
 
 
-
     private Timestamp dateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,15 +32,4 @@ public class Message {
     private User user;
 
     private String username;
-
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "id=" + id +
-                ", message='" + message + '\'' +
-                ", dateTime=" + dateTime +
-                ", username='" + username + '\'' +
-                '}';
-    }
 }

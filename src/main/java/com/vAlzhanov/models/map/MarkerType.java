@@ -1,11 +1,13 @@
 package com.vAlzhanov.models.map;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "marker_type")
 public class MarkerType {

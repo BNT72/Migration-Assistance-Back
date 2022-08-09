@@ -2,12 +2,9 @@ package com.vAlzhanov.controllers;
 
 import com.vAlzhanov.models.auth.User;
 import com.vAlzhanov.models.supportService.Message;
-import com.vAlzhanov.repository.auth.UserRepository;
-import com.vAlzhanov.repository.supportService.MessageRepo;
+import com.vAlzhanov.service.SupportService;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -17,34 +14,25 @@ import java.util.Set;
 public class SupportServiceController {
 
 
-    private final MessageRepo messageRepo;
-    private final UserRepository userRepository;
+    private final SupportService supportService;
 
-    public SupportServiceController(MessageRepo messageRepo, UserRepository userRepository) {
-        this.messageRepo = messageRepo;
-        this.userRepository = userRepository;
+    public SupportServiceController(SupportService supportService) {
+        this.supportService = supportService;
     }
 
 
     @GetMapping("/{userName}")
     public List<Message> getDialog(@PathVariable String userName) {
-        User user=userRepository.findByUsername(userName).orElseThrow();
-        return messageRepo.findAllByUserOrderByDateTime(user);
+        return supportService.getDialog(userName);
     }
 
     @PostMapping("/{userName}")
     public List<Message> postMessage(@PathVariable String userName, @RequestBody Message messageInfo) {
-        messageInfo.setDateTime(Timestamp.valueOf(LocalDateTime.now()));
-        User currentUser = userRepository.findByUsername(userName).orElseThrow();
-        messageInfo.setUser(currentUser);
-        messageRepo.save(messageInfo);
-        currentUser.getMessages().add(messageInfo);
-        userRepository.save(currentUser);
-        return messageRepo.findAllByUserOrderByDateTime(currentUser);
+        return supportService.postMessage(userName, messageInfo);
     }
 
     @GetMapping("/")
     public Set<User> getAllDialogs() {
-        return userRepository.findAllByMessagesIsNotNull();
+        return supportService.getAllDialogs();
     }
 }

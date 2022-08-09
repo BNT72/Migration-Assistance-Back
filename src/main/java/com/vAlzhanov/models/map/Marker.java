@@ -1,6 +1,7 @@
 package com.vAlzhanov.models.map;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -8,7 +9,8 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "markers")
 public class Marker {
@@ -33,7 +35,7 @@ public class Marker {
     private double lng;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(  name = "marker_type_relations",
+    @JoinTable(name = "marker_type_relations",
             joinColumns = @JoinColumn(name = "type_id"),
             inverseJoinColumns = @JoinColumn(name = "marker_id"))
     private Set<MarkerType> markerTypes = new HashSet<>();

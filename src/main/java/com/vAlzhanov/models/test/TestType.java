@@ -1,12 +1,13 @@
 package com.vAlzhanov.models.test;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "test_types")
 public class TestType {
@@ -17,8 +18,4 @@ public class TestType {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private ETestType type;
-
-    public TestType() {
-
-    }
 }
