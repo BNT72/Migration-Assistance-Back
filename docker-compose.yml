@@ -1,0 +1,39 @@
+version: '3'
+services:
+
+  db:
+    image: 'postgres:13.7'
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: obtaining_citizenship
+    ports:
+      - "5432:5432"
+
+  app:
+    image: 'docker-demo-back:v1'
+    build:
+      context: .
+    container_name: app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/obtaining_citizenship
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+
+  app-front:
+    image: 'docker-demo-front:v1'
+    build:
+      context: .
+    container_name: app-front
+    ports:
+      - "8081:8081"
+    depends_on:
+      - app
+    restart: unless-stopped
+    stdin_open: true

@@ -19,6 +19,7 @@ public class MapService {
     }
 
     public List<Marker> getMarkers(String markerType) {
-        return markerRepo.findByMarkerTypes(markerTypeRepo.findByName(EMarkerType.valueOf(markerType)));
+        return  markerRepo.findByMarkerTypes(markerTypeRepo.findByName(EMarkerType.valueOf(markerType.substring(0, markerType.length() - 1))));
+
     }
 }
