@@ -10,11 +10,10 @@ services:
       POSTGRES_DB: obtaining_citizenship
     ports:
       - "5432:5432"
+    restart: unless-stopped
 
   app:
-    image: 'docker-demo-back:v1'
-    build:
-      context: .
+    image: 'valzhanov/migration-assistance-back:v1'
     container_name: app
     ports:
       - "8080:8080"
@@ -27,9 +26,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
 
   app-front:
-    image: 'docker-demo-front:v1'
-    build:
-      context: .
+    image: 'valzhanov/migration-assistance-front:v1'
     container_name: app-front
     ports:
       - "8081:8081"

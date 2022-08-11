@@ -1,10 +1,10 @@
-FROM maven:3.8.6-amazoncorretto-17
+FROM maven:3.8.6-eclipse-temurin-17-alpine
 
-COPY ./ ./
+RUN apk add git && git clone https://github.com/BNT72/Migration-Assistance-Back.git && cd Migration-Assistance-Back &&  mvn clean package
+
+WORKDIR ./Migration-Assistance-Back
 
 EXPOSE 8080
-
-RUN mvn clean package
 
 CMD ["java", "-jar","target/back-0.0.1-SNAPSHOT.jar"]
 
