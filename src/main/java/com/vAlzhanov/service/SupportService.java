@@ -6,7 +6,6 @@ import com.vAlzhanov.repository.auth.UserRepository;
 import com.vAlzhanov.repository.supportService.MessageRepo;
 import org.springframework.stereotype.Component;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +27,7 @@ public class SupportService {
     }
 
     public List<Message> postMessage(String userName, Message messageInfo) {
-        messageInfo.setDateTime(Timestamp.valueOf(LocalDateTime.now()));
+        messageInfo.setDateTime(LocalDateTime.now());
         User currentUser = userRepository.findByUsername(userName).orElseThrow();
         messageInfo.setUser(currentUser);
         messageRepo.save(messageInfo);

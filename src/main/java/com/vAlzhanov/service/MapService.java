@@ -1,25 +1,29 @@
 package com.vAlzhanov.service;
 
+import com.vAlzhanov.dto.MarkerDto;
 import com.vAlzhanov.models.map.EMarkerType;
-import com.vAlzhanov.models.map.Marker;
 import com.vAlzhanov.repository.map.MarkerRepo;
-import com.vAlzhanov.repository.map.MarkerTypeRepo;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class MapService {
     private final MarkerRepo markerRepo;
-    private final MarkerTypeRepo markerTypeRepo;
 
-    public MapService(MarkerRepo markerRepo, MarkerTypeRepo markerTypeRepo) {
+    public MapService(MarkerRepo markerRepo) {
         this.markerRepo = markerRepo;
-        this.markerTypeRepo = markerTypeRepo;
     }
 
-    public List<Marker> getMarkers(String markerType) {
-        return  markerRepo.findByMarkerTypes(markerTypeRepo.findByName(EMarkerType.valueOf(markerType.substring(0, markerType.length() - 1))));
+    public List<MarkerDto> getMarkers(String markerType) {
+        Optional<EMarkerType> type = Optional.of(EMarkerType.valueOf(markerType.substring(0, markerType.length()-1)));
+        return  markerRepo
+                .findAllByMarkerType(type.orElseThrow(IllegalArgumentException::new))
+                .stream()
+                .map(MarkerDto::new)
+                .toList();
+
 
     }
 }

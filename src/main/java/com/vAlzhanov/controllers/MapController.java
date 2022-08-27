@@ -1,6 +1,6 @@
 package com.vAlzhanov.controllers;
 
-import com.vAlzhanov.models.map.Marker;
+import com.vAlzhanov.dto.MarkerDto;
 import com.vAlzhanov.service.MapService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +18,7 @@ public class MapController {
     }
 
     @PostMapping("/")
-    public List<Marker> getMarkers(@RequestBody String markerType) {
+    public List<MarkerDto> getMarkers(@RequestBody String markerType) {
         return mapService.getMarkers(markerType);
     }
 }
